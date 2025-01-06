@@ -1,5 +1,4 @@
 const express = require("express");
-const User = require("../Controller/userController");
 const {
   GetUsers,
   GetUsersById,

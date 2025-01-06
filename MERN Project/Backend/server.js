@@ -2,13 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const connectDb = require('./DB/db');
 const authRoutes = require('./Routes/authRoutes');
-const homeRoutes = require('./Routes/homeRoutes');
-const aboutRoutes = require('./Routes/aboutRoutes');
 const userRoutes = require('./Routes/userRoutes');
 const feedBackRoutes = require('./Routes/feedBackRoutes');
 const verifyToken = require('./MiddleWare/auth');
-const servicesRoutes = require('./Routes/servicesRoutes');
 const tokenRoutes = require('./Routes/refreshTokenRoutes');
+const eventRoutes = require('./Routes/eventRoutes');
 
 
 // Import the middleware
@@ -19,15 +17,13 @@ app.use(express.json());
 app.use(cors());
 
 // Public routes (no token required)
-app.use('/', homeRoutes);
-app.use('/about', aboutRoutes);
 app.use('/auth', authRoutes);
 app.use('/refresh', tokenRoutes );
 
 // Protected routes (token required)
 app.use('/user', verifyToken, userRoutes); // Apply middleware to protect `/user`
 app.use('/contactUs', verifyToken, feedBackRoutes); // Protect `/contactUs`
-app.use('/services', verifyToken, servicesRoutes);
+app.use('/events', verifyToken, eventRoutes);
 
 // Start the database and server
 connectDb().then(() => {
