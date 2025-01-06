@@ -7,7 +7,7 @@ const EventForm = async (req, res) => {
         const eventFormCreated = await Events.create({
             name,
             description,
-            date
+            date:ISODate(date)
         });
 
         return res.status(201).json({
