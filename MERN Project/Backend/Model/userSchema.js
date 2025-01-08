@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   isExhibitor: { type: Boolean, default: false },
   joiningDate: { type: Date, default: Date.now, required: true },
+  eventId: { type: String, required: false },
   refreshToken: { type: String }
 });
 

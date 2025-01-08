@@ -8,7 +8,6 @@ const verifyToken = require('./MiddleWare/auth');
 const tokenRoutes = require('./Routes/refreshTokenRoutes');
 const eventRoutes = require('./Routes/eventRoutes');
 
-
 // Import the middleware
 require('dotenv').config();
 
