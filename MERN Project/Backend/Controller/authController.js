@@ -72,7 +72,6 @@ const Registration = async (req, res) => {
 
     const token = await userCreated.generateToken();
 
-
     // Send a single response with success and user details
     return res.status(201).json({
       success: "User created successfully",
