@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const url = "http://localhost:8000/services/allServices";
 
-export const useGetServices = () => {
+const url = 'http://localhost:8000/events/allevent'
+
+export const useGetEvents = () => {
   const query = useQuery({
-    queryKey: ["services"],
+    queryKey: ['events'],
     queryFn: async () => {
       // Retrieve the token from local storage or your app's state management
-      const token = localStorage.getItem("Token");
+      const token = localStorage.getItem('Token')
 
       // Set up axios with the authorization header
       const response = await axios.get(url, {

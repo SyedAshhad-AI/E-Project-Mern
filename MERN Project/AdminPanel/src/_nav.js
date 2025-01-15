@@ -5,10 +5,6 @@ import {
   cilCalculator,
   cilChartPie,
   cilCursor,
-  cilDescription,
-  cilDrop,
-  cilExternalLink,
-  cilNotes,
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
@@ -34,13 +30,13 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Add Events',
-    to: '/theme/typography',
+    to: '/EventAdd',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Event List',
-    to: '/theme/typography',
+    to: '/EventList',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
