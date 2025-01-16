@@ -2,16 +2,20 @@ const Events = require("../Model/eventSchema");
 
 const EventForm = async (req, res) => {
     try {
-        const { name, description, date } = req.body;
+        const { name, description, date, createdBy } = req.body;
+
+        // Convert the date string to a JavaScript Date object
+        const eventDate = new Date(date);
 
         const eventFormCreated = await Events.create({
             name,
             description,
-            date:ISODate(date)
+            date: eventDate,
+            createdBy
         });
 
         return res.status(201).json({
-            success: "Event Added successfully",
+            success: "Event added successfully",
             eventDetails: eventFormCreated
         });
 
@@ -20,6 +24,27 @@ const EventForm = async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 };
+
+const UpdateEvent = async (req, res) => {
+    const { id } = req.params;
+    const updateData = req.body;
+  
+    try {
+      const result = await Events.findByIdAndUpdate(id, updateData, {
+        new: true,
+        runValidators: true,
+      });
+  
+      if (!result) {
+        return res.status(404).json({ message: "event not found" });
+      }
+  
+      res.status(200).json({ message: "event updated successfully", updatedEvent: result });
+    } catch (error) {
+      console.error("Error updating event:", error);
+      res.status(500).json({ message: "Failed to update event", error: error.message });
+    }
+  };
 
 
 const DeleteEvent = async (req, res) => {
@@ -50,4 +75,14 @@ const GetEvent = async (req, res) => {
     }
 };
 
-module.exports = { EventForm, DeleteEvent, GetEvent };
+const GetEventById = async (_id) => {
+    try {
+      const event = await Events.findById(_id).exec();
+      return event;
+    } catch (err) {
+      console.error("Error fetching event:", err);
+      throw err;
+    }
+  };
+
+module.exports = { EventForm, DeleteEvent, GetEvent, UpdateEvent, GetEventById };

@@ -1,8 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
-
-const url = 'http://localhost:8000/events/allevent'
+const url = 'http://localhost:8000/events/allEvent'
 
 export const useGetEvents = () => {
   const query = useQuery({
@@ -16,13 +15,13 @@ export const useGetEvents = () => {
         headers: {
           Authorization: `Bearer ${token}`, // Add the token to the Authorization header
         },
-      });
+      })
 
-      return response.data; // Axios automatically parses JSON responses
+      return response.data // Axios automatically parses JSON responses
     },
     staleTime: Infinity,
     cacheTime: Infinity,
-  });
+  })
 
-  return query;
-};
+  return query
+}

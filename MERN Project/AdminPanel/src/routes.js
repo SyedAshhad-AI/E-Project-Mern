@@ -10,7 +10,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/EventList', name: 'EventList', element: EventList },
-  { path: '/EventEdit', name: 'EventEdit', element: EventEdit },
+  { path: '/EventEdit/:id', name: 'EventEdit', element: EventEdit },
   { path: '/EventAdd', name: 'EventAdd', element: EventAdd },
   { path: '/EventAdd', name: 'EventAdd', element: EventAdd },
   { path: '/Card', name: 'Card', element: Card },
