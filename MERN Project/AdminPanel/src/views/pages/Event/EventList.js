@@ -4,14 +4,25 @@ import { useDeleteEvent } from '../../../Hooks/delete'
 import { CButton, CCard, CCardBody, CCardImage, CCardText, CCardTitle } from '@coreui/react'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
+import { useUpdateEventStatus } from '../../../Hooks/updateEvent'
 
 const EventList = () => {
   const navigate = useNavigate()
   const { mutate, isLoading: isDeleting } = useDeleteEvent()
   const { data: events, isLoading, error } = useGetEvents()
+  const updateEventStatus = useUpdateEventStatus()
 
   if (isLoading) return <p>Loading events...</p>
   if (error) return <p>Error loading events!</p>
+
+  const handleUpdateStatus = (eventId) => {
+    const statusUpdates = {
+      isApproved: true,
+      isAvailable: true,
+    }
+
+    updateEventStatus.mutate({ eventId, statusUpdates })
+  }
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
@@ -56,6 +67,11 @@ const EventList = () => {
                     >
                       Edit
                     </CButton>
+
+                    <CButton color="primary" onClick={() => handleUpdateStatus(event._id)}>
+                      Approve
+                    </CButton>
+
                     <CButton
                       color="danger"
                       onClick={() => handleDelete(event._id)}

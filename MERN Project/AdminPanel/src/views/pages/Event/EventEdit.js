@@ -1,12 +1,139 @@
-import React from 'react'
-import { useGetEvents } from '../../../Hooks/useGetEvents'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
+import { useNavigate } from 'react-router-dom'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCol,
+  CContainer,
+  CForm,
+  CFormInput,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilEducation, cilClock, cilUser } from '@coreui/icons'
+import { useEvent } from '../../../Hooks/useGetEvents'
+import { useUpdateEvent } from '../../../Hooks/updateEvent'
 
 const EventEdit = () => {
-  const { data: events, isLoading: isLoadingServices, error: errorServices } = useGetEvents()
-  console.log(events)
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { data: event, isLoading } = useEvent(id)
+  const { mutate: updateEvent, isLoading: isUpdating } = useUpdateEvent()
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    date: '',
+    createdBy: '',
+  })
+
+  useEffect(() => {
+    if (event) {
+      setFormData({
+        name: event.name,
+        description: event.description,
+        date: event.date.split('T')[0], // Format date for input field
+        createdBy: event.createdBy,
+      })
+    }
+  }, [event])
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({ ...prevData, [name]: value }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    updateEvent(
+      { id, ...formData },
+      {
+        onSuccess: () => {
+          navigate('/EventList') // Redirect to events list after update
+        },
+      },
+    )
+  }
+
+  if (isLoading || isUpdating) {
+    return <div>Loading...</div>
+  }
+
   return (
-    <div>
-      <h1>Edit</h1>
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+      <CContainer>
+        <CRow className="justify-content-center">
+          <CCol md={9} lg={7} xl={6}>
+            <CCard className="mx-4">
+              <CCardBody className="p-4">
+                <CForm onSubmit={handleSubmit}>
+                  <h1>Edit Event</h1>
+                  <p className="text-body-secondary">Update the details of your event</p>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon={cilEducation} />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="Event Name"
+                      name="name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>@</CInputGroupText>
+                    <CFormInput
+                      placeholder="Description"
+                      name="description"
+                      type="text"
+                      required
+                      value={formData.description}
+                      onChange={handleChange}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon={cilClock} />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="Date"
+                      name="date"
+                      type="date"
+                      required
+                      value={formData.date}
+                      onChange={handleChange}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon={cilUser} />
+                    </CInputGroupText>
+                    <CFormInput
+                      name="createdBy"
+                      type="text"
+                      required
+                      disabled
+                      value={formData.createdBy}
+                      placeholder="Created By"
+                    />
+                  </CInputGroup>
+                  <div className="d-grid">
+                    <CButton color="success" type="submit">
+                      Update Event
+                    </CButton>
+                  </div>
+                </CForm>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
+      </CContainer>
     </div>
   )
 }
