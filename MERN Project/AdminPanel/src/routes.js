@@ -4,7 +4,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const EventList = React.lazy(() => import('./views/pages/Event/EventList.js'))
 const EventEdit = React.lazy(() => import('./views/pages/Event/EventEdit.js'))
 const EventAdd = React.lazy(() => import('./views/pages/Event/EventAdd.js'))
-const Card = React.lazy(() => import('./views/base/cards/Cards.js'))
+const Charts = React.lazy(() => import('./views/charts/Charts.js'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -12,8 +12,7 @@ const routes = [
   { path: '/EventList', name: 'EventList', element: EventList },
   { path: '/EventEdit/:id', name: 'EventEdit', element: EventEdit },
   { path: '/EventAdd', name: 'EventAdd', element: EventAdd },
-  { path: '/EventAdd', name: 'EventAdd', element: EventAdd },
-  { path: '/Card', name: 'Card', element: Card },
+  { path: '/Charts', name: 'Charts', element: Charts },
 ]
 
 export default routes
