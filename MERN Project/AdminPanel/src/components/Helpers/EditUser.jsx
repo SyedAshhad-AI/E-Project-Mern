@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useUpdateUser } from '../Hooks/useUpdateUser';
-import { useUser } from '../Hooks/useUsers';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useUpdateUser } from '../Hooks/useUpdateUser'
+import { useUser } from '../Hooks/useUsers'
 
 export const EditUser = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { data, isLoading } = useUser(id);
-  const { mutate: updateUser, isLoading: isUpdating } = useUpdateUser();
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { data, isLoading } = useUser(id)
+  const { mutate: updateUser, isLoading: isUpdating } = useUpdateUser()
 
   const [user, setUser] = useState({
     username: '',
     email: '',
     phone: '',
-  });
+  })
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [visible, setVisible] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     if (data) {
@@ -26,50 +26,53 @@ export const EditUser = () => {
         email: data.email,
         password: data.password,
         phone: data.phone,
-      });
+      })
     }
-  }, [data]);
+  }, [data])
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setUser({ ...user, [name]: value });
-  };
+    const { name, value } = event.target
+    setUser({ ...user, [name]: value })
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    updateUser({ id, ...user }, {
-      onSuccess: (data) => {
-        navigate('/users')
-        setSuccessMessage(data.success);
-        setErrorMessage('');
-        setUser({
-          username: '',
-          email: '',
-          phone: '',
-        });
+    event.preventDefault()
+    updateUser(
+      { id, ...user },
+      {
+        onSuccess: (data) => {
+          navigate('/users')
+          setSuccessMessage(data.success)
+          setErrorMessage('')
+          setUser({
+            username: '',
+            email: '',
+            phone: '',
+          })
+        },
+        onError: (error) => {
+          setSuccessMessage('')
+          setErrorMessage(error.message)
+        },
       },
-      onError: (error) => {
-        setSuccessMessage('');
-        setErrorMessage(error.message);
-      },
-    });
-  };
+    )
+  }
 
   useEffect(() => {
     if (errorMessage || successMessage) {
-      setVisible(true);
+      setVisible(true)
       const timer = setTimeout(() => {
-        setVisible(false);
-        setErrorMessage('');
-        setSuccessMessage('');
-      }, 5000);
+        setVisible(false)
+        setErrorMessage('')
+        setSuccessMessage('')
+      }, 5000)
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer)
     }
-  }, [errorMessage, successMessage]);
+  }, [errorMessage, successMessage])
 
   if (isLoading) {
-    return <div>Loading...</div>; // Add a loading state until data is fetched
+    return <div>Loading...</div> // Add a loading state until data is fetched
   }
 
   return (
@@ -81,8 +84,16 @@ export const EditUser = () => {
           </h2>
 
           {visible && errorMessage && (
-            <div className="fixed top-4 right-4 p-4 mb-4 text-sm text-red-500 bg-red-100 border border-red-200 rounded-lg shadow-md" role="alert">
-              <svg className="w-5 h-5 mr-2 inline" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+            <div
+              className="fixed top-4 right-4 p-4 mb-4 text-sm text-red-500 bg-red-100 border border-red-200 rounded-lg shadow-md"
+              role="alert"
+            >
+              <svg
+                className="w-5 h-5 mr-2 inline"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
                 <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
               </svg>
               <span className="font-medium">Error: {errorMessage}!</span>
@@ -90,8 +101,16 @@ export const EditUser = () => {
           )}
 
           {visible && successMessage && (
-            <div className="fixed top-4 right-4 p-4 mb-4 text-sm text-green-700 bg-green-100 border border-green-200 rounded-lg shadow-md" role="alert">
-              <svg className="w-5 h-5 mr-2 inline" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+            <div
+              className="fixed top-4 right-4 p-4 mb-4 text-sm text-green-700 bg-green-100 border border-green-200 rounded-lg shadow-md"
+              role="alert"
+            >
+              <svg
+                className="w-5 h-5 mr-2 inline"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
                 <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
               </svg>
               <span className="font-medium">Success: {successMessage}!</span>
@@ -114,7 +133,9 @@ export const EditUser = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">Email address</label>
+              <label className="block text-sm font-medium leading-6 text-white">
+                Email address
+              </label>
               <div className="mt-2">
                 <input
                   name="email"
@@ -154,5 +175,5 @@ export const EditUser = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

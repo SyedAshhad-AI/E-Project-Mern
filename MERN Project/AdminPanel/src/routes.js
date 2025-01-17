@@ -5,6 +5,9 @@ const EventList = React.lazy(() => import('./views/pages/Event/EventList.js'))
 const EventEdit = React.lazy(() => import('./views/pages/Event/EventEdit.js'))
 const EventAdd = React.lazy(() => import('./views/pages/Event/EventAdd.js'))
 const Charts = React.lazy(() => import('./views/charts/Charts.js'))
+const UserList = React.lazy(() => import('./views/pages/Users/UserList.js'))
+const EditUser = React.lazy(() => import('./views/pages/Users/EditUser.js'))
+const UserDetails = React.lazy(() => import('./views/pages/Users/UserDetails.js'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -13,6 +16,9 @@ const routes = [
   { path: '/EventEdit/:id', name: 'EventEdit', element: EventEdit },
   { path: '/EventAdd', name: 'EventAdd', element: EventAdd },
   { path: '/Charts', name: 'Charts', element: Charts },
+  { path: '/UserList', name: 'UserList', element: UserList },
+  { path: '/EditUser/:id', name: 'EditUser', element: EditUser },
+  { path: '/UserDetails/:id', name: 'UserDetails', element: UserDetails },
 ]
 
 export default routes

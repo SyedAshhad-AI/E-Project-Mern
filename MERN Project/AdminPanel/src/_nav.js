@@ -74,13 +74,13 @@ const _nav = [
       {
         component: CNavItem,
         name: 'User List',
-        to: '/buttons/buttons',
+        to: '/UserList',
       },
-      {
-        component: CNavItem,
-        name: 'Add User',
-        to: '/buttons/button-groups',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Edit User',
+      //   to: '/EditUser',
+      // },
     ],
   },
   {
