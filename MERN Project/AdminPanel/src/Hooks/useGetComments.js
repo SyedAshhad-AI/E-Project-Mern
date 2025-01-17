@@ -39,7 +39,7 @@ export const useListComments = () => {
 
 export const useUserComments = (name) => {
   const query = useQuery({
-    queryKey: ["comments",name],
+    queryKey: ["comments", name],
     queryFn: async () => {
       // Retrieve the token from local storage or your app's state management
       const token = getAuthToken();

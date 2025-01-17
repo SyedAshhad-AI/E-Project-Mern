@@ -1,42 +1,15 @@
 import React from 'react'
 import { useGetEvents } from '../../../Hooks/useGetEvents'
-import { useDeleteEvent } from '../../../Hooks/delete'
 import { CButton, CCard, CCardBody, CCardImage, CCardText, CCardTitle } from '@coreui/react'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
-import { useUpdateEventStatus } from '../../../Hooks/updateEvent'
-
-const EventList = () => {
+const AvailableEvents = () => {
   const navigate = useNavigate()
-  const { mutate, isLoading: isDeleting } = useDeleteEvent()
   const { data: events, isLoading, error } = useGetEvents()
-  const updateEventStatus = useUpdateEventStatus()
 
   if (isLoading) return <p>Loading events...</p>
   if (error) return <p>Error loading events!</p>
 
-  const handleUpdateStatus = (eventId) => {
-    const statusUpdates = {
-      isApproved: true,
-      isAvailable: true,
-    }
-
-    updateEventStatus.mutate({ eventId, statusUpdates })
-  }
-
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this event?')) {
-      mutate(id, {
-        onSuccess: () => {
-          alert('Event successfully deleted.')
-        },
-        onError: (err) => {
-          console.error('Failed to delete event:', err)
-          alert('Failed to delete event.')
-        },
-      })
-    }
-  }
 
   return (
     <div className="container mt-4">
@@ -60,23 +33,8 @@ const EventList = () => {
                     {event.date ? dayjs(event.date).format('DD/MM/YYYY') : 'N/A'}
                   </CCardText>
                   <div className="d-flex justify-content-between">
-                    <CButton
-                      color="primary"
-                      onClick={() => navigate(`/EventEdit/${event._id}`)}
-                      disabled={isDeleting}
-                    >
-                      Edit
-                    </CButton>
-
                     <CButton color="primary" onClick={() => handleUpdateStatus(event._id)}>
-                      Approve
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      onClick={() => handleDelete(event._id)}
-                      disabled={isDeleting}
-                    >
-                      Delete
+                      Add Event
                     </CButton>
                   </div>
                 </CCardBody>
@@ -91,4 +49,4 @@ const EventList = () => {
   )
 }
 
-export default EventList
+export default AvailableEvents

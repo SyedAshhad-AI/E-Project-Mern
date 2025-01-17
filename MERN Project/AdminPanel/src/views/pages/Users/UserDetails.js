@@ -62,6 +62,9 @@ const UserDetails = () => {
             <p>
               <strong>Admin:</strong> {data.isAdmin ? 'Yes' : 'No'}
             </p>
+            <p>
+              <strong>Exhibitor:</strong> {data.isExhibitor ? 'Yes' : 'No'}
+            </p>
           </div>
 
           {/* Display Delete Error */}

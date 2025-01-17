@@ -25,6 +25,7 @@ const EditUser = () => {
     username: '',
     email: '',
     phone: '',
+    isExhibitor: '',
   })
 
   const [errorMessage, setErrorMessage] = useState('')
@@ -37,7 +38,19 @@ const EditUser = () => {
         username: data.username,
         email: data.email,
         phone: data.phone,
+        isExhibitor: data.isExhibitor,
       })
+
+      // Trigger flicker effect
+      const flickerTimer = setInterval(() => {
+        setUser((prevState) => ({
+          ...prevState,
+          isExhibitor: prevState.isExhibitor === 'yes' ? 'no' : 'yes',
+        }))
+      }, 500)
+
+      // Stop flicker effect after 3 seconds
+      setTimeout(() => clearInterval(flickerTimer), 3000)
     }
   }, [data])
 
@@ -59,6 +72,7 @@ const EditUser = () => {
             username: '',
             email: '',
             phone: '',
+            isExhibitor: '',
           })
         },
         onError: (error) => {
@@ -135,6 +149,17 @@ const EditUser = () => {
                     type="tel"
                     required
                     value={user.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Is Exhibitor</label>
+                  <CFormInput
+                    name="isExhibitor"
+                    type="text"
+                    required
+                    value={user.isExhibitor}
                     onChange={handleChange}
                   />
                 </div>

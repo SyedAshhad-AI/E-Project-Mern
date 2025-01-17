@@ -57,7 +57,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Available Events',
-        to: '/base/accordion',
+        to: '/AvailableEvents',
       },
     ],
   },
@@ -76,11 +76,6 @@ const _nav = [
         name: 'User List',
         to: '/UserList',
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Edit User',
-      //   to: '/EditUser',
-      // },
     ],
   },
   {
@@ -92,12 +87,12 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Your Feedback List',
-        to: '/buttons/buttons',
+        to: '/FeedBackFormList',
       },
       {
         component: CNavItem,
         name: 'Add Your Feedback',
-        to: '/buttons/button-groups',
+        to: '/FeedBackForm',
       },
     ],
   },
