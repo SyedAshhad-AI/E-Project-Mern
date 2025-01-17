@@ -1,24 +1,24 @@
 import { BsArrowUpRight } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import "./services.css";
+
 const ServicesSection = () => {
   const location = useLocation(); // Get the current URL path
 
   const services = [
     {
-      title: "Branding",
-      description: `We weave visual stories and craft strategic messaging that resonate at heartstrings, 
-      build unwavering trust, and turn customers into fervent brand champions.`,
+      title: "Event Planning",
+      description: `We provide end-to-end event planning, ensuring every detail is meticulously organized to create a seamless and unforgettable experience.`,
       link: "/services",
     },
     {
-      title: "Marketing",
-      description: `We design data-driven campaigns that ignite engagement like wildfire and turn clicks into conversions.`,
+      title: "Venue Coordination",
+      description: `From selecting the perfect venue to managing on-site logistics, we ensure your event space is set up to meet your vision.`,
       link: "/services",
     },
     {
-      title: "Graphic Design",
-      description: `We craft visual masterpieces that sing your brand's story in vibrant colors and captivating shapes.`,
+      title: "Catering & Hospitality",
+      description: `We coordinate top-tier catering and hospitality services, offering customized menus that will leave your guests satisfied and impressed.`,
       link: "/services",
     },
   ];

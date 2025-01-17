@@ -22,7 +22,6 @@ const NavBar = () => {
               className="h-11 w-auto lg:h-14 lg:mx-4"
             />
             <div className="text-lg font-bold text-white lg:block hidden">
-              Cyber Nest
             </div>
           </div>
 
@@ -89,39 +88,15 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-                <Menu as="div" className="relative text-left">
-                  <div>
-                    <MenuButton className="inline-flex w-full justify-between items-center rounded-md font-semibold  text-white hover:text-blue-500">
-                      About
-                      <RiArrowDropDownLine className=" h-5 w-5 text-gray-400" />
-                    </MenuButton>
-                  </div>
-                  <MenuItems
-                    transition
-                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-900 shadow-lg ring-1 p-2 ring-black ring-opacity-5 transition focus:outline-none"
-                  >
-                    <div className="py-1">
-                      <MenuItem>
-                        <Link
-                          to="/about"
-                          onClick={handleLinkClick}
-                          className="block px-4 py-2 text-sm text-white hover:bg-slate-700 rounded-lg"
-                        >
-                          About Us
-                        </Link>
-                      </MenuItem>
-                      <MenuItem>
-                        <Link
-                          to="/aboutTeam"
-                          onClick={handleLinkClick}
-                          className="block px-4 py-2 text-sm text-white hover:bg-slate-700 rounded-lg"
-                        >
-                          About Team
-                        </Link>
-                      </MenuItem>
-                    </div>
-                  </MenuItems>
-                </Menu>
+              <li>
+                <Link
+                  to="/about"
+                  onClick={handleLinkClick}
+                  className="text-white hover:text-blue-500 font-semibold block lg:inline-block py-2 lg:py-0"
+                >
+                  About
+                </Link>
+              </li>
               </li>
               <li>
                 <Link
