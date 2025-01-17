@@ -28,7 +28,7 @@ const UsersList = () => {
               <CCardBody className="text-center">
                 <CCardTitle>{user.username}</CCardTitle>
                 <CCardText>{user.email}</CCardText>
-                <Link to={`/userDetails/${user._id}`}>
+                <Link to={`/UserDetails/${user._id}`}>
                   <CButton color="primary" className="mt-3">
                     View Details
                   </CButton>
