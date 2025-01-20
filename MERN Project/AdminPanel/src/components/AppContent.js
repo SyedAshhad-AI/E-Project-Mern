@@ -11,22 +11,20 @@ const AppContent = () => {
     <CContainer className="px-4" lg>
       <Suspense fallback={<CSpinner color="primary" />}>
         <Routes>
-          <Route element={<PrivateRoute />}>
-            {routes.map((route, idx) => {
-              return (
-                route.element && (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    name={route.name}
-                    element={<route.element />}
-                  />
-                )
+          {routes.map((route, idx) => {
+            return (
+              route.element && (
+                <Route
+                  key={idx}
+                  path={route.path}
+                  exact={route.exact}
+                  name={route.name}
+                  element={route.element} // Just render the element directly
+                />
               )
-            })}
-            <Route path="/" element={<Navigate to="dashboard" replace />} />
-          </Route>
+            )
+          })}
+          <Route path="/" element={<Navigate to="dashboard" replace />} />
         </Routes>
       </Suspense>
     </CContainer>
