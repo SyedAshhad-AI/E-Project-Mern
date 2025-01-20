@@ -28,13 +28,19 @@ export const useGetEvents = () => {
 
 export const useEvent = (id) => {
   const query = useQuery({
-    queryKey: ['event', id],
+    queryKey: ['event', 'profile', id],
     queryFn: async () => {
-      // Retrieve the token from local storage or your app's state management
+      if (!id) {
+        throw new Error('Event ID is required')
+      }
+
       const token = localStorage.getItem('Token')
+      if (!token) {
+        throw new Error('Authentication token is missing')
+      }
 
       // Split the 'id' string into an array if it contains multiple IDs
-      const ids = id.split(',') // Split the comma-separated string into an array
+      const ids = id.split(',').map((idStr) => idStr.trim())
 
       // Make the request to the API
       const response = await axios.get(`http://localhost:8000/events/eventById/${ids.join(',')}`, {
@@ -44,6 +50,10 @@ export const useEvent = (id) => {
       })
 
       return response.data // Axios automatically parses JSON responses
+    },
+    enabled: !!id, // Only run the query if `id` is truthy
+    onError: (error) => {
+      console.error('Error fetching events:', error.message)
     },
   })
 

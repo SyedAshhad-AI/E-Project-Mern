@@ -9,7 +9,7 @@ const UserEventList = () => {
   const { data: profileData } = useProfile()
   const { userDetails } = profileData || {}
   const { eventIds } = userDetails || {}
-
+  console.log(userDetails)
   // Ensure eventIds is an array before calling join
   const eventIdsString = Array.isArray(eventIds) ? eventIds.join(',') : ''
 
@@ -20,11 +20,13 @@ const UserEventList = () => {
 
   // Handle event removal
   const handleRemoveEvent = (userId, eventId) => {
-    removeEvent.mutate({ userId, eventId })
+    if (removeEvent && removeEvent.mutate) {
+      removeEvent.mutate({ userId, eventId })
+    }
   }
 
   if (isLoading) return <p>Loading events...</p>
-  if (error) return <p>{error}</p>
+  if (error) return <p>Error: {error.message || 'Something went wrong'}</p>
 
   return (
     <div className="container mt-4">
@@ -50,7 +52,7 @@ const UserEventList = () => {
                   <div className="d-flex justify-content-between">
                     <CButton
                       color="danger"
-                      onClick={() => handleRemoveEvent(userDetails._id, event._id)}
+                      onClick={() => handleRemoveEvent(userDetails?._id, event._id)}
                     >
                       Cancel Event
                     </CButton>

@@ -19,6 +19,6 @@ eventRoutes.put("/editEvent/:id", UpdateEvent);
 eventRoutes.delete("/deleteEvent/:id", DeleteEvent);
 eventRoutes.put("/updateStatus/:id", UpdateStatus);
 eventRoutes.post("/addEventToUser", AddEventToUser);
-eventRoutes.post("/deleteUserEvent/:userId/:eventId", RemoveEventFromUser);
+eventRoutes.delete("/deleteUserEvent/:userId/:eventId", RemoveEventFromUser);
 
 module.exports = eventRoutes;
