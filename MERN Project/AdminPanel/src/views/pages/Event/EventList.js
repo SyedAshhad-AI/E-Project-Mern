@@ -1,7 +1,7 @@
 import React from 'react'
 import { useGetEvents } from '../../../Hooks/useGetEvents'
 import { useDeleteEvent } from '../../../Hooks/delete'
-import { CButton, CCard, CCardBody, CCardImage, CCardText, CCardTitle } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardImage, CCardText, CCardTitle, CBadge } from '@coreui/react'
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateEventStatus } from '../../../Hooks/updateEvent'
@@ -55,47 +55,57 @@ const EventList = () => {
       <ToastContainer />
       <div className="row">
         {events && events.length > 0 ? (
-          events.map((event) => (
-            <div key={event._id} className="col-md-4 mb-4">
-              <CCard style={{ width: '18rem' }}>
-                <CCardImage
-                  orientation="top"
-                  src={event.image || 'src/assets/images/event.jpg'}
-                  alt={event.title || 'Event Image'}
-                />
-                <CCardBody>
-                  <CCardTitle>{event.name || 'Event Title'}</CCardTitle>
-                  <CCardText>
-                    <b>Description:</b> {event.description || 'No description available.'}
-                  </CCardText>
-                  <CCardText>
-                    <strong>Date:</strong>{' '}
-                    {event.date ? dayjs(event.date).format('DD/MM/YYYY') : 'N/A'}
-                  </CCardText>
-                  <div className="d-flex justify-content-between">
-                    <CButton
-                      color="primary"
-                      onClick={() => navigate(`/EventEdit/${event._id}`)}
-                      disabled={isDeleting}
-                    >
-                      Edit
-                    </CButton>
+          events.map((event) => {
+            const isExpired = dayjs(event.date).isBefore(dayjs())
+            return (
+              <div key={event._id} className="col-md-4 mb-4">
+                <CCard style={{ width: '18rem' }}>
+                  <CCardImage
+                    orientation="top"
+                    src={event.image || 'src/assets/images/event.jpg'}
+                    alt={event.title || 'Event Image'}
+                  />
+                  <CCardBody>
+                    <CCardTitle>{event.name || 'Event Title'}</CCardTitle>
+                    <CCardText>
+                      <b>Description:</b> {event.description || 'No description available.'}
+                    </CCardText>
+                    <CCardText>
+                      <strong>Date:</strong>{' '}
+                      {event.date ? dayjs(event.date).format('DD/MM/YYYY') : 'N/A'}
+                    </CCardText>
+                    <CBadge color={isExpired ? 'danger' : 'success'}>
+                      {isExpired ? 'Expired' : 'Available'}
+                    </CBadge>
+                    <div className="d-flex justify-content-between mt-2">
+                      <CButton
+                        color="primary"
+                        onClick={() => navigate(`/EventEdit/${event._id}`)}
+                        disabled={isDeleting}
+                      >
+                        Edit
+                      </CButton>
 
-                    <CButton color="primary" onClick={() => handleUpdateStatus(event._id)}>
-                      Approve
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      onClick={() => handleDelete(event._id)}
-                      disabled={isDeleting}
-                    >
-                      Delete
-                    </CButton>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </div>
-          ))
+                      <CButton
+                        color="primary"
+                        onClick={() => handleUpdateStatus(event._id)}
+                        disabled={event.isApproved || isDeleting}
+                      >
+                        Approve
+                      </CButton>
+                      <CButton
+                        color="danger"
+                        onClick={() => handleDelete(event._id)}
+                        disabled={isDeleting}
+                      >
+                        Delete
+                      </CButton>
+                    </div>
+                  </CCardBody>
+                </CCard>
+              </div>
+            )
+          })
         ) : (
           <p>No events available.</p>
         )}

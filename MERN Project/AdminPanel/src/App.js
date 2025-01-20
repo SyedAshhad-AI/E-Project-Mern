@@ -9,6 +9,7 @@ import './scss/style.scss'
 import './scss/examples.scss'
 import { isTokenExpired, scheduleTokenRefresh } from './Hooks/authUtils'
 import { RefreshToken } from './Hooks/refreshToken'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -103,6 +104,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </HashRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }

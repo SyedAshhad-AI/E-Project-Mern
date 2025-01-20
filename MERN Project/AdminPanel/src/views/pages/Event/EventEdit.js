@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -32,12 +30,13 @@ const EventEdit = () => {
   })
 
   useEffect(() => {
+    console.log('Event data:', event) // Debugging: Log the event data
     if (event) {
       setFormData({
-        name: event.name,
-        description: event.description,
-        date: event.date.split('T')[0], // Format date for input field
-        createdBy: event.createdBy,
+        name: event.name || '',
+        description: event.description || '',
+        date: event.date || '', // Ensure it's in the correct format
+        createdBy: event.createdBy || '',
       })
     }
   }, [event])
@@ -53,14 +52,18 @@ const EventEdit = () => {
       { id, ...formData },
       {
         onSuccess: () => {
-          navigate('/EventList') // Redirect to events list after update
+          navigate('/EventList')
         },
-      },
+      }
     )
   }
 
   if (isLoading || isUpdating) {
     return <div>Loading...</div>
+  }
+
+  if (!event) {
+    return <div>Event data not found!</div> // Handle case where event is not loaded
   }
 
   return (
