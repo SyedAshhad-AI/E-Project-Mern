@@ -12,6 +12,7 @@ const UserDetails = React.lazy(() => import('./views/pages/Users/UserDetails.js'
 const FeedBackForm = React.lazy(() => import('./views/pages/FeedBack/FeedBackForm.js'))
 const FeedBackFormList = React.lazy(() => import('./views/pages/FeedBack/FeedBackList.js'))
 const UserFeedbackList = React.lazy(() => import('./views/pages/FeedBack/UserFeedbackList.js'))
+const UserEventList = React.lazy(() => import('./views/pages/UserEvents/UserEventList.js'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -21,7 +22,7 @@ const routes = [
   { path: '/EventEdit/:id', name: 'EventEdit', element: EventEdit },
   { path: '/EventAdd', name: 'EventAdd', element: EventAdd },
   { path: '/AvailableEvents', name: 'AvailableEvents', element: AvailableEvents },
-  { path: '/AvailableEvents', name: 'AvailableEvents', element: AvailableEvents },
+  { path: '/UserEventList', name: 'UserEventList', element: UserEventList },
 
   { path: '/Charts', name: 'Charts', element: Charts },
 

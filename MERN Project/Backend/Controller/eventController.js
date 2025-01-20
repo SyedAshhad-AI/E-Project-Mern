@@ -153,6 +153,37 @@ const AddEventToUser = async (req, res) => {
   }
 };
 
+const RemoveEventFromUser = async (req, res) => {
+  const { userId, eventId } = req.params; // Get user ID and event ID from request params
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the eventId exists in the user's eventIds array
+    if (!user.eventIds.includes(eventId)) {
+      return res.status(404).json({ message: "Event not found in user's eventIds" });
+    }
+
+    // Remove the eventId from the user's eventIds array
+    user.eventIds = user.eventIds.filter(id => id !== eventId);
+
+    // Save the updated user document
+    await user.save();
+
+    res
+      .status(200)
+      .json({ message: "Event removed successfully from user", updatedUser: user });
+  } catch (error) {
+    console.error("Error removing event from user:", error);
+    res.status(500).json({ message: "Failed to remove event from user", error: error.message });
+  }
+};
+
+
 module.exports = {
   EventForm,
   DeleteEvent,
@@ -161,4 +192,5 @@ module.exports = {
   GetEventById,
   UpdateStatus,
   AddEventToUser,
+  RemoveEventFromUser
 };

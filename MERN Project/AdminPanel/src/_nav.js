@@ -52,7 +52,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Your Events',
-        to: '/base/accordion',
+        to: '/UserEventList',
       },
       {
         component: CNavItem,
