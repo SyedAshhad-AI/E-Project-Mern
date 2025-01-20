@@ -1,49 +1,31 @@
 import React from 'react'
-import { useGetEvents } from '../../../Hooks/useGetEvents'
 import { CButton, CCard, CCardBody, CCardImage, CCardText, CCardTitle } from '@coreui/react'
 import dayjs from 'dayjs'
-import { useNavigate } from 'react-router-dom'
-import { useAddEventsToUser } from '../../../Hooks/addEventToUser'
 import { useProfile } from '../../../Hooks/useGetProfile'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { useEvent } from '../../../Hooks/useGetEvents'
 
-const AvailableEvents = () => {
-  const navigate = useNavigate()
-  const { data: events, isLoading, error } = useGetEvents()
+const UserEventList = () => {
   const { data: profileData } = useProfile()
   const { userDetails } = profileData || {}
-  const { _id: userId } = userDetails || {}
-  const { mutate } = useAddEventsToUser()
+  const { eventIds } = userDetails || []
 
-  const handleAddEvent = (userId, eventId) => {
-    mutate(
-      { userId, eventId },
-      {
-        onSuccess: () => {
-          toast.success('Event Booked successfully!')
-        },
-        onError: (error) => {
-          toast.error(`Error adding event: ${error.message}`)
-        },
-      },
-    )
-  }
+  // Custom hook to fetch events based on eventIds
+  const { data: events, isLoading, error } = useEvent(eventIds.join(','))
 
-  const filteredEvents = events?.filter((event) => event.isAvailable && event.isApproved)
+  if (isLoading) return <p>Loading events...</p>
+  if (error) return <p>{error}</p>
 
   return (
     <div className="container mt-4">
-      <ToastContainer />
       <div className="row">
-        {filteredEvents && filteredEvents.length > 0 ? (
-          filteredEvents.map((event) => (
+        {events && events.length > 0 ? (
+          events.map((event) => (
             <div key={event._id} className="col-md-4 mb-4">
               <CCard style={{ width: '18rem' }}>
                 <CCardImage
                   orientation="top"
                   src={event.image || 'src/assets/images/event.jpg'}
-                  alt={event.title || 'Event Image'}
+                  alt={event.name || 'Event Image'}
                 />
                 <CCardBody>
                   <CCardTitle>{event.name || 'Event Title'}</CCardTitle>
@@ -55,8 +37,8 @@ const AvailableEvents = () => {
                     {event.date ? dayjs(event.date).format('DD/MM/YYYY') : 'N/A'}
                   </CCardText>
                   <div className="d-flex justify-content-between">
-                    <CButton color="primary" onClick={() => handleAddEvent(userId, event._id)}>
-                      Book Event
+                    <CButton color="danger" onClick={() => {}}>
+                      Cancel Event
                     </CButton>
                   </div>
                 </CCardBody>
@@ -71,4 +53,4 @@ const AvailableEvents = () => {
   )
 }
 
-export default AvailableEvents
+export default UserEventList

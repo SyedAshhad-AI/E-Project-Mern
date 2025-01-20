@@ -5,6 +5,8 @@ import { CButton, CCard, CCardBody, CCardImage, CCardText, CCardTitle } from '@c
 import dayjs from 'dayjs'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateEventStatus } from '../../../Hooks/updateEvent'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const EventList = () => {
   const navigate = useNavigate()
@@ -21,7 +23,17 @@ const EventList = () => {
       isAvailable: true,
     }
 
-    updateEventStatus.mutate({ eventId, statusUpdates })
+    updateEventStatus.mutate(
+      { eventId, statusUpdates },
+      {
+        onSuccess: () => {
+          toast.success('Event approved successfully!')
+        },
+        onError: (err) => {
+          toast.error(`Failed to approve event: ${err.message}`)
+        },
+      },
+    )
   }
 
   const handleDelete = (id) => {
@@ -40,6 +52,7 @@ const EventList = () => {
 
   return (
     <div className="container mt-4">
+      <ToastContainer />
       <div className="row">
         {events && events.length > 0 ? (
           events.map((event) => (

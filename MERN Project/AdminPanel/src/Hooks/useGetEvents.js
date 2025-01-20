@@ -33,8 +33,11 @@ export const useEvent = (id) => {
       // Retrieve the token from local storage or your app's state management
       const token = localStorage.getItem('Token')
 
-      // Use axios to make the request, including the Authorization header
-      const response = await axios.get(`http://localhost:8000/events/eventById/${id}`, {
+      // Split the 'id' string into an array if it contains multiple IDs
+      const ids = id.split(',') // Split the comma-separated string into an array
+
+      // Make the request to the API
+      const response = await axios.get(`http://localhost:8000/events/eventById/${ids.join(',')}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Add the token to the Authorization header
         },

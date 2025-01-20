@@ -1,4 +1,6 @@
+const { default: mongoose } = require("mongoose");
 const Events = require("../Model/eventSchema");
+const User = require("../Model/userSchema");
 
 const EventForm = async (req, res) => {
   try {
@@ -99,18 +101,56 @@ const UpdateStatus = async (req, res) => {
 };
 
 const GetEventById = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const event = await Events.findById(id);
-        if (event) {
-            res.json(event); // Send the event as a JSON response
-        } else {
-            res.status(404).send("Event not found"); // Handle case where the event is not found
-        }
-    } catch (err) {
-        console.error("Error fetching event:", err);
-        res.status(500).send("Internal Server Error"); // Send an error response
+  const { id } = req.params;
+
+  // Split the ID string into an array (if it's multiple IDs)
+  const ids = id.split(",").map((id) => new mongoose.Types.ObjectId(id.trim())); // Convert each ID to an ObjectId
+
+  try {
+    // Check if the `ids` array has more than one ID, and find all events that match
+    const events = await Events.find({ _id: { $in: ids } });
+
+    if (events.length > 0) {
+      res.json(events); // Send the events as a JSON response
+    } else {
+      res.status(404).send("Events not found"); // Handle case where no events are found
     }
+  } catch (err) {
+    console.error("Error fetching event(s):", err);
+    res.status(500).send("Internal Server Error"); // Send an error response
+  }
+};
+
+const AddEventToUser = async (req, res) => {
+  const { userId, eventId } = req.body;
+
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the event ID already exists in the eventIds array
+    if (!user.eventIds.includes(eventId)) {
+      // Add the new event ID to the array
+      user.eventIds.push(eventId);
+
+      // Save the updated user document
+      await user.save();
+
+      return res
+        .status(200)
+        .json({ message: "Event ID added successfully", user });
+    } else {
+      return res.status(400).json({ message: "Event ID already exists" });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error adding event ID", error: error.message });
+  }
 };
 
 module.exports = {
@@ -120,4 +160,5 @@ module.exports = {
   UpdateEvent,
   GetEventById,
   UpdateStatus,
+  AddEventToUser,
 };

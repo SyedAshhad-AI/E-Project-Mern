@@ -1,16 +1,27 @@
 import { CCard, CCardBody, CCardHeader, CButton, CSpinner, CFormTextarea } from '@coreui/react'
-import { useListComments } from '../../../Hooks/useGetComments'
+import { useListComments, useUserComments } from '../../../Hooks/useGetComments'
 import { useDeleteComment } from '../../../Hooks/delete'
 import React from 'react'
+import { useProfile } from '../../../Hooks/useGetProfile'
 
 const Comments = () => {
-  // Fetching comments data
-  const { data: comments, isLoading, isError, error } = useListComments()
-  // Handling delete mutation
   const { mutate, isLoading: isDeleting } = useDeleteComment()
+  const {
+    data: profileData,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+    error: profileError,
+  } = useProfile()
+  const { userDetails } = profileData || {}
+  const { username } = userDetails || {}
+  const {
+    data: comments = [],
+    isLoading: isCommentsLoading,
+    isError: isCommentsError,
+    error: commentsError,
+  } = useUserComments(username)
 
-  // Display loader during data fetch
-  if (isLoading) {
+  if (isProfileLoading || isCommentsLoading) {
     return (
       <div className="text-center mt-5">
         <CSpinner color="primary" />
@@ -19,19 +30,15 @@ const Comments = () => {
     )
   }
 
-  // Display error if fetching fails
-  if (isError) {
-    return (
-      <p className="text-center text-danger">Error: {error?.message || 'Something went wrong.'}</p>
-    )
+  if (isProfileError || isCommentsError) {
+    const errorMessage = profileError?.message || commentsError?.message || 'Something went wrong.'
+    return <p className="text-center text-danger">Error: {errorMessage}</p>
   }
 
-  // Handle empty comments
   if (!comments || comments.length === 0) {
     return <p className="text-center mt-4">No comments available.</p>
   }
 
-  // Function to handle deletion with confirmation
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       mutate(id, {

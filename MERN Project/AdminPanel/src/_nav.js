@@ -87,12 +87,17 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Your Feedback List',
-        to: '/FeedBackFormList',
+        to: '/UserFeedbackList',
       },
       {
         component: CNavItem,
         name: 'Add Your Feedback',
         to: '/FeedBackForm',
+      },
+      {
+        component: CNavItem,
+        name: 'Feedback List',
+        to: '/FeedBackFormList',
       },
     ],
   },
