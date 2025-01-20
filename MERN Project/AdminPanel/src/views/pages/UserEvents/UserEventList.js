@@ -18,10 +18,10 @@ const UserEventList = () => {
 
   const removeEvent = useRemoveEventFromUser()
 
+  // Handle event removal
   const handleRemoveEvent = (userId, eventId) => {
     removeEvent.mutate({ userId, eventId })
   }
-
 
   if (isLoading) return <p>Loading events...</p>
   if (error) return <p>{error}</p>
@@ -48,7 +48,10 @@ const UserEventList = () => {
                     {event.date ? dayjs(event.date).format('DD/MM/YYYY') : 'N/A'}
                   </CCardText>
                   <div className="d-flex justify-content-between">
-                    <CButton color="danger" onClick={handleRemoveEvent = (userId, eventId) => { }}>
+                    <CButton
+                      color="danger"
+                      onClick={() => handleRemoveEvent(userDetails._id, event._id)}
+                    >
                       Cancel Event
                     </CButton>
                   </div>
