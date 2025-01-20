@@ -78,19 +78,19 @@ const About = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                name: "Sarah Johnson",
+                name: "Syed Ashhad",
                 role: "CEO & Founder",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
+                image: "" 
               },
               {
-                name: "Michael Chen",
+                name: "M Uzair Khan",
                 role: "Creative Director",
-                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80"
+                image: ""
               },
               {
-                name: "Emily Williams",
+                name: "Muhammad Afnan",
                 role: "Operations Director",
-                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80"
+                image: ""
               }
             ].map((member, index) => (
               <div key={index} className="bg-gray-800 rounded-xl p-6">
