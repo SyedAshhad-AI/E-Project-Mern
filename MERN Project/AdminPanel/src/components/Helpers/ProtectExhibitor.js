@@ -7,7 +7,7 @@ const ProtectExhibitor = () => {
 
   // Display a loading screen while profile data is being fetched
   if (isLoading) {
-    return <div>loading....</div> // Use a proper loading component
+    return <div>Loading...</div> // Replace with a spinner or a styled loading component if needed
   }
 
   // Handle any errors during profile fetch
@@ -16,14 +16,15 @@ const ProtectExhibitor = () => {
     return <Navigate to="/404" replace />
   }
 
+  // Ensure that data is defined and destructure userDetails safely
   const { isAdmin, isExhibitor } = data?.userDetails || {}
 
-  // Allow access if the user is either an admin or an exhibitor
+  // Check if the user has access rights
   if (!isAdmin && !isExhibitor) {
-    return <Navigate to="/unauthorizedPage" replace />
+    return <Navigate to="/unauthorized" replace />
   }
 
-  // Render the protected route's component if the user is an admin or exhibitor
+  // Render the protected route's component if the user has the right access
   return <Outlet />
 }
 

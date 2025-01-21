@@ -20,7 +20,7 @@ const ProtectAdmin = () => {
 
   // Redirect to unauthorized page if the user is not an admin
   if (!isAdmin) {
-    return <Navigate to="/unauthorizedPage" replace />
+    return <Navigate to="/unauthorized" replace />
   }
 
   // Render the protected route's component if the user is an admin
