@@ -79,7 +79,6 @@ const About = () => {
             {[
               {
                 name: "Syed Ashhad",
-                name: "Syed Ashhad",
                 role: "CEO & Founder",
                 image: "Public/Images/Ashhad.jfif"
               },
