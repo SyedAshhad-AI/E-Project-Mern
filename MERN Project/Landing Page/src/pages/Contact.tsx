@@ -47,7 +47,7 @@ const Contact = () => {
                   <Mail className="h-6 w-6 text-purple-500 mt-1" />
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">Email</h3>
-                    <p className="text-gray-400">info@eventpro.com</p>
+                    <p className="text-gray-400">info@Event Sphere.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
