@@ -4,6 +4,7 @@ import axios from 'axios'
 const urlUsers = 'http://localhost:8000/user/users'
 const urlComments = 'http://localhost:8000/contactUs/allComments'
 const urlEvents = 'http://localhost:8000/events/deleteEvent'
+const urlUserEvents = 'http://localhost:8000/events/deleteUserEvent/:userId/:eventId'
 
 export const useDeleteUser = () => {
   const queryClient = useQueryClient()
@@ -65,7 +66,7 @@ export const useDeleteEvent = () => {
       const token = localStorage.getItem('Token') // Replace with your token retrieval logic
 
       // Perform the DELETE request with authorization
-      return axios.delete(`${urlEvents}/${id}`, {
+      return axios.delete(`${urlUserEvents}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token to the Authorization header
         },

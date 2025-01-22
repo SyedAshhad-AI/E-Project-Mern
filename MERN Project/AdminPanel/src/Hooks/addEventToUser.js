@@ -27,7 +27,7 @@ export const useAddEventsToUser = () => {
     },
     onSuccess: () => {
       // Invalidate the 'events' query to ensure the data is refetched
-      queryClient.invalidateQueries({ queryKey: ['userEvents'] })
+      queryClient.invalidateQueries({ queryKey: ['userEvents', 'profile'] })
     },
     mutationKey: ['AddUserEvents'], // Key to uniquely identify this mutation
   })

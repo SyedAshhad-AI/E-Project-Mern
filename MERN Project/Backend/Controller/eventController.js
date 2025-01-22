@@ -103,21 +103,32 @@ const UpdateStatus = async (req, res) => {
 const GetEventById = async (req, res) => {
   const { id } = req.params;
 
-  // Split the ID string into an array (if it's multiple IDs)
-  const ids = id.split(",").map((id) => new mongoose.Types.ObjectId(id.trim())); // Convert each ID to an ObjectId
+  if (!id) {
+    return res.status(400).json({ error: "Event ID(s) required" }); // Return early if no ID is provided
+  }
 
   try {
-    // Check if the `ids` array has more than one ID, and find all events that match
+    // Split the ID string and convert each to an ObjectId
+    const ids = id.split(",").map((idStr) => {
+      if (!mongoose.Types.ObjectId.isValid(idStr.trim())) {
+        throw new Error(`Invalid ID: ${idStr}`); // Validate each ID
+      }
+      return new mongoose.Types.ObjectId(idStr.trim());
+    });
+
+    // Find all events matching the provided IDs
     const events = await Events.find({ _id: { $in: ids } });
 
     if (events.length > 0) {
-      res.json(events); // Send the events as a JSON response
+      return res.json(events); // Send the events as a JSON response
     } else {
-      res.status(404).send("Events not found"); // Handle case where no events are found
+      return res.status(404).json({ error: "No events found" }); // Return if no events are found
     }
   } catch (err) {
-    console.error("Error fetching event(s):", err);
-    res.status(500).send("Internal Server Error"); // Send an error response
+    console.error("Error fetching event(s):", err.message);
+    return res
+      .status(500)
+      .json({ error: "Internal Server Error", details: err.message }); // Consistent error response
   }
 };
 
@@ -153,6 +164,46 @@ const AddEventToUser = async (req, res) => {
   }
 };
 
+const RemoveEventFromUser = async (req, res) => {
+  const { userId, eventId } = req.params; // Get user ID and event ID from request params
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the eventId exists in the user's eventIds array
+    if (!user.eventIds.includes(eventId)) {
+      return res
+        .status(404)
+        .json({ message: "Event not found in user's eventIds" });
+    }
+
+    // Remove the eventId from the user's eventIds array
+    user.eventIds = user.eventIds.filter((id) => id !== eventId);
+
+    // Save the updated user document
+    await user.save();
+
+    res
+      .status(200)
+      .json({
+        message: "Event removed successfully from user",
+        updatedUser: user,
+      });
+  } catch (error) {
+    console.error("Error removing event from user:", error);
+    res
+      .status(500)
+      .json({
+        message: "Failed to remove event from user",
+        error: error.message,
+      });
+  }
+};
+
 module.exports = {
   EventForm,
   DeleteEvent,
@@ -161,4 +212,5 @@ module.exports = {
   GetEventById,
   UpdateStatus,
   AddEventToUser,
+  RemoveEventFromUser,
 };
