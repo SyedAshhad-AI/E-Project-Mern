@@ -47,7 +47,7 @@ const Contact = () => {
                   <Mail className="h-6 w-6 text-purple-500 mt-1" />
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">Email</h3>
-                    <p className="text-gray-400">info@eventpro.com</p>
+                    <p className="text-gray-400">info@Event Sphere.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -298,14 +298,19 @@ const Contact = () => {
 
         {/* Map Section */}
         <div className="mt-20 bg-gray-800 rounded-xl p-8 border border-gray-700">
-          <h2 className="text-2xl font-bold mb-6">Our Location</h2>
-          <div className="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg">
-            {/* Add your map integration here */}
-            <div className="w-full h-[400px] bg-gray-700 rounded-lg flex items-center justify-center">
-              <p className="text-gray-400">Map Integration</p>
-            </div>
-          </div>
-        </div>
+      <h2 className="text-2xl font-bold mb-6">Our Location</h2>
+      <div className="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg">
+        {/* Embed Google Maps iframe */}
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28932.273538754303!2d67.02715487431641!3d24.981958100000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb340e584b891c3%3A0x29b2cbc198ba2dbd!2sAptech%20Computer%20Education%20North%20Karachi%20Center!5e0!3m2!1sen!2s!4v1737558441901!5m2!1sen!2s"
+          width="100%" // Make it responsive
+          height="400"
+          style={{ border: '0' }}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
       </div>
     </div>
   );

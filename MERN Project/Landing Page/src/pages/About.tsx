@@ -8,7 +8,7 @@ const About = () => {
       <div className="max-w-7xl mx-auto px-4">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">About EventPro</h1>
+          <h1 className="text-4xl font-bold mb-4">About Event Sphere</h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             We're passionate about creating memorable experiences through flawless event execution.
           </p>
@@ -26,7 +26,7 @@ const About = () => {
           <div>
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <p className="text-gray-400 mb-4">
-              Founded in 2015, EventPro has grown from a small team of passionate event planners to a full-service event management company trusted by clients worldwide.
+              Founded in 2015, Event Sphere has grown from a small team of passionate event planners to a full-service event management company trusted by clients worldwide.
             </p>
             <p className="text-gray-400">
               We believe that every event tells a unique story, and we're here to help you tell yours in the most memorable way possible.
@@ -80,17 +80,17 @@ const About = () => {
               {
                 name: "Syed Ashhad",
                 role: "CEO & Founder",
-                image: "" 
+                image: "Public/Images/Ashhad.jfif"
               },
               {
-                name: "M Uzair Khan",
+                name: "Muhammad Uzair Khan",
                 role: "Creative Director",
-                image: ""
+                image: "Public/Images/Uzair.jfif"
               },
               {
-                name: "Muhammad Afnan",
+                name: "Muhammad Afnan Ahmed",
                 role: "Operations Director",
-                image: ""
+                image: "Public/Images/Afnan.jfif"
               }
             ].map((member, index) => (
               <div key={index} className="bg-gray-800 rounded-xl p-6">
