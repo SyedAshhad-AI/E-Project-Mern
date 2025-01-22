@@ -66,7 +66,7 @@ export const useDeleteEvent = () => {
       const token = localStorage.getItem('Token') // Replace with your token retrieval logic
 
       // Perform the DELETE request with authorization
-      return axios.delete(`${urlUserEvents}/${id}`, {
+      return axios.delete(`${urlEvents}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token to the Authorization header
         },

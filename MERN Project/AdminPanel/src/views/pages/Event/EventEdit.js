@@ -54,7 +54,7 @@ const EventEdit = () => {
         onSuccess: () => {
           navigate('/EventList')
         },
-      }
+      },
     )
   }
 
