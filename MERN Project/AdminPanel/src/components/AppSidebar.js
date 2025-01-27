@@ -1,8 +1,9 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
+import logo from '../assets/images/logo-eventsphere-1.png'
 import {
   CCloseButton,
+  CImage,
   CSidebar,
   CSidebarBrand,
   CSidebarFooter,
@@ -12,9 +13,6 @@ import {
 import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
-
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
 
 // sidebar nav config
 import navigation from '../_nav'
@@ -37,8 +35,13 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={42} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+          <CImage
+            src={logo} // Replace with the actual path to your image
+            alt="Brand Logo"
+            width={200} // Set the width of the image (optional)
+            height={50} // Set the height of the image (optional)
+            className="d-inline-block align-top" // Optional classes for styling
+          />
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
@@ -46,6 +49,7 @@ const AppSidebar = () => {
           onClick={() => dispatch({ type: 'set', sidebarShow: false })}
         />
       </CSidebarHeader>
+
       <AppSidebarNav items={navigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler
